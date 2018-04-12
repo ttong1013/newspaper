@@ -8,6 +8,7 @@ import logging
 import copy
 import os
 import glob
+import datetime
 
 import requests
 
@@ -107,6 +108,8 @@ class Article(object):
         # Keep state for downloads and parsing
         self.is_parsed = False
         self.download_state = ArticleDownloadState.NOT_STARTED
+        self.download_timestamp = None
+        self.download_timestamp_refresh = None
         self.download_exception_msg = None
 
         # Meta description field in the HTML source
@@ -168,6 +171,12 @@ class Article(object):
                 log.debug('Download failed on URL %s because of %s' %
                           (self.url, self.download_exception_msg))
                 return
+            if not self.download_timestamp:
+                # The first time the article is downloaded
+                self.download_timestamp = datetime.datetime.now()
+            else:
+                # The latest refresh download, if any
+                self.download_timestamp_refresh = datetime.datetime.now()
         else:
             html = input_html
 
