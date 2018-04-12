@@ -402,7 +402,6 @@ class Source(object):
         self.articles = list(articles)
         return self
 
-    @property
     def size(self):
         """Number of articles linked to this news source
         """
@@ -415,19 +414,16 @@ class Source(object):
         """
         utils.clear_memo_cache(self)
 
-    @property
     def feed_urls(self):
         """Returns a list of feed urls
         """
         return [feed.url for feed in self.feeds]
 
-    @property
     def category_urls(self):
         """Returns a list of category urls
         """
         return [category.url for category in self.categories]
 
-    @property
     def article_urls(self):
         """Returns a list of article urls
         """
